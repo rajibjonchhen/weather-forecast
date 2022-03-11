@@ -1,4 +1,4 @@
-import { Col } from "react-bootstrap";
+import { Card, Col } from "react-bootstrap";
 
 function DailyCard({day}) {
     
@@ -55,17 +55,24 @@ function DailyCard({day}) {
     return ( 
 
         <Col sm={6} md={4} lg={3} xl={3} >
-        <div className="bg-dark text-light p-2 mt-3" style={{fontSize:'15px', minHeight:'250px'}}>
-           {myArray?.map((item,i) => 
-           <div key={i} className='daily-weather-list'>
-                <div>
-                    {item.title}
-                </div>
-                <div>
-                    {item.value}
-                </div>
-            </div>)}
-        </div>
+            <Card   style={{ width: '15rem',fontSize:'12px' }} className="bg-dark text-light mt-3">
+            <Card.Img variant="top" src="https://newsonair.com/wp-content/uploads/2021/06/weather-8.jpg" />
+            <Card.Body>
+                <Card.Title>Day</Card.Title>
+                <Card.Text>
+                {myArray?.map((item,i) => 
+                    <div key={i} className='daily-weather-list'>
+                        <div>
+                            {item.title}
+                        </div>
+                        <div>
+                            {item.value}
+                        </div>
+                    </div>
+                )}
+                </Card.Text>
+            </Card.Body>
+            </Card>
         </Col>
      );
 }

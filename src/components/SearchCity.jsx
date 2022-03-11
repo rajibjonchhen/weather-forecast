@@ -19,6 +19,7 @@ function SearchCity() {
             dispatch(getWeatherAction(query))
             dispatch(removeWeatherDailyAction())
             console.log()
+            setQuery('')
         }
     return ( 
         <Form onSubmit={(e) => {handleSearch(e)}}>

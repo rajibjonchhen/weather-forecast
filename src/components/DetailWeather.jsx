@@ -23,12 +23,12 @@ function DetailWeather({setShowDetail, showDetail}) {
         <Container style={{display:showDetail? 'block':'none'}}>
                         <p className="h3 mb-3">Current Weather Detail {weather.name}</p>
         <div className='text-white d-flex align-items-center' onClick={() => setShowDetail(false)}> <BiLeftArrow/>Back</div>
-                        <p>{Date().toLocaleString()}</p>
+                        
         <Row>
                 <Col>
                       <div className="bg-dark text-light p-2 mt-3" style={{fontSize:'15px', minHeight:'250px'}}>
 
-                        {isLoading? <Loader/> : isError? <Alert variant="danger">{isError}</Alert> : weather &&    
+                        {isLoading? <Loader/> : isError? <Alert variant="danger">{isError}</Alert> : weather.name &&    
                         <Container>
                             <Row>
                                 <Col>
@@ -76,11 +76,11 @@ function DetailWeather({setShowDetail, showDetail}) {
                 </Col>
            </Row>
 
-            <Container style={{display:showDailyWeather? 'block':'none'}} >
-            <Row >
+          
+            <Row className='d-flex' style={{display:showDailyWeather? 'block':'none'}} >
                 { dailyWeatherLoading?  <Loader/> : dailyWeather.daily.length>0 && dailyWeather?.daily.map((day,i) =><DailyCard key={i} day={day}/>)}
             </Row>
-            </Container>
+           
         </Container>
      );
 }
