@@ -1,12 +1,13 @@
 import { applyMiddleware, combineReducers, compose, createStore } from "redux"
 import { persistStore, persistReducer } from "redux-persist";
+import { encryptTransform } from "redux-persist-transform-encrypt";
 import storage from "redux-persist/lib/storage/session";
 import thunk from "redux-thunk";
 import weatherForecastReducer from "../reducers/weatherForecastReducer";
 
 export const initialState = {
     weatherForecast :{
-        city : 'Lisbon,Portugal',
+        city : '',
         weather : {},
         days : [],
     }
@@ -15,6 +16,14 @@ export const initialState = {
 const persistConfig = {
     key: "root",
     storage,
+    transforms: [
+        encryptTransform({
+          secretKey: process.env.REACT_APP_SECRET_KEY_CODE,
+          onError: function (error) {
+            console.log(error)
+          },
+        }),
+      ],
   };
 
   const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

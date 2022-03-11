@@ -5,20 +5,24 @@ import { ACTIONS, getWeatherAction, selectedCityAction } from "../redux/actions"
 
 function Home() {
 
+const [query, setQuery] = useState()
 const city =  useSelector(state => state.weatherForecast.city)
 const weather =  useSelector(state => state.weatherForecast.weather)
+
 const dispatch = useDispatch()
 
 console.log("city",city);
 console.log("weather",weather);
     useEffect(() => {
-        dispatch(selectedCityAction("Lisbon,Portugal"))
+        
         // dispatch(getWeatherAction(city))
-        // getWeather(city)
-    },[])
+    },[city])
+
     
-    const handleSearch = (city) => {
-        getWeather(city)
+    const handleSearch = async(e) => {
+        e.preventDefault()
+        dispatch(selectedCityAction(query))
+       
     }
     const getWeather = async() => {
         
@@ -29,8 +33,8 @@ console.log("weather",weather);
            <Row>
                 <Col>
                     {weather && <div className="bg-dark text-light" style={{fontSize:'12px'}}>
-                        <Form onSubmit={() => {handleSearch()}}>
-                            <Form.Control/>
+                        <Form onSubmit={(e) => {handleSearch(e)}}>
+                            <Form.Control onChange={(e) => selectedCityAction(e.target.value)} />
                         </Form>
                         <p>Current Weather</p>
                         <p>{Date().toLocaleString()}</p>
