@@ -14,6 +14,13 @@ switch (action.type){
                 
             }
 
+        case ACTIONS.IS_ERROR_DAY:
+            return{
+                ...state,
+                    isErrorDay : action.payload
+                
+            }
+
         case ACTIONS.GET_WEATHER_DAILY:
             return {
                 ...state,
@@ -23,7 +30,7 @@ switch (action.type){
         case ACTIONS.ROMOVE_WEATHER_DAILY:
             return {
                 ...state,
-                    detailWeather : {}
+                    detailWeather : null
             }
 
     default: return state

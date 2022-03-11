@@ -5,7 +5,8 @@ export const ACTIONS = {
     ROMOVE_WEATHER_DAILY : "ROMOVE_WEATHER_DAILY",
     IS_LOADING : "IS_LOADING",
     DAILYLOADER : "DAILYLOADER",
-
+    IS_ERROR : "IS_ERROR",
+    IS_ERROR_DAY : "IS_ERROR_DAY"
 }
 
 export const selectedCityAction = (city) => ({
@@ -32,11 +33,17 @@ export const getWeatherAction = (city = 'lisbon')  => {
                     payload : false
 
                 })
+                
             } else {  
                 console.log('error geting data')
                 dispatch({
                     type : ACTIONS.IS_LOADING,
                     payload : false
+
+                })
+                dispatch({
+                    type : ACTIONS.IS_ERROR,
+                    payload : 'error geting data'
 
                 })
                 return
@@ -46,7 +53,10 @@ export const getWeatherAction = (city = 'lisbon')  => {
             dispatch({
                 type : ACTIONS.IS_LOADING,
                 payload : false
-
+            })
+            dispatch({
+                type : ACTIONS.IS_ERROR,
+                payload :error
             })
         }
     }
@@ -62,7 +72,7 @@ export const getWeatherDailyAction = (lat, lon, cnt)  => {
                 type : ACTIONS.DAILYLOADER,
                 payload : true
             })
-            const response = await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&APPID=3b9973cf61ca30f5e17a067cbe48bfdc`)
+            const response = await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&APPID=3b9973cf61ca30f5e17a067cbe48bfdc&units=metric`)
             if(response.ok){
                 const data = await response.json()
                 console.log(data);
@@ -82,6 +92,11 @@ export const getWeatherDailyAction = (lat, lon, cnt)  => {
                     payload : false
 
                 })
+                dispatch({
+                    type : ACTIONS.IS_ERROR_DAY,
+                    payload : 'error getting data'
+
+                })
                 return
             }
         } catch (error) {
@@ -89,6 +104,10 @@ export const getWeatherDailyAction = (lat, lon, cnt)  => {
             dispatch({
                 type : ACTIONS.DAILYLOADER,
                 payload : false
+            })
+            dispatch({
+                type : ACTIONS.IS_ERROR_DAY,
+                payload : error
 
             })
         }

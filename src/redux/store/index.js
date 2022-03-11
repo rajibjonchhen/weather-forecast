@@ -11,10 +11,12 @@ export const initialState = {
         city : '',
         weather : {},
         isLoading : false,
+        isError : "",
     },
     dailyWeather : {
         dailyLoader : true,
-        detailWeather:{}
+        detailWeather:{},
+        isErrorDay : "",
     },
 }
 

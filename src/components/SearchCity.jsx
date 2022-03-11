@@ -11,12 +11,14 @@ function SearchCity() {
 
     useEffect(() => {
         dispatch(getWeatherAction(query))
-    },[city])
+        console.log(city)
+    },[])
 
     const handleSearch = async(e) => {
         e.preventDefault()
-            dispatch(selectedCityAction(query))
+            dispatch(getWeatherAction(query))
             dispatch(removeWeatherDailyAction())
+            console.log()
         }
     return ( 
         <Form onSubmit={(e) => {handleSearch(e)}}>

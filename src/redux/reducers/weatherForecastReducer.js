@@ -23,6 +23,11 @@ switch (action.type){
             isLoading : action.payload
         }
 
+    case ACTIONS.IS_ERROR:
+        return{
+            ...state,
+            isError : action.payload
+        }
     default: return state
 
 }

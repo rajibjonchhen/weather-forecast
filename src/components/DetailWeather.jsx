@@ -6,26 +6,29 @@ import { useDispatch, useSelector } from "react-redux";
 import Loader from "./Loader";
 import DailyCard from "./DailyCard";
 import { getWeatherDailyAction } from "../redux/actions";
+import { useState } from "react";
 
 function DetailWeather({setShowDetail, showDetail}) {
 
+    const [showDailyWeather, setShowDailyWeather] = useState(false)
     const weather =  useSelector(state => state.weatherForecast.weather)
     const dailyWeather =  useSelector(state => state.dailyWeather.detailWeather)
     const dailyWeatherLoading =  useSelector(state => state.dailyWeather.dailyLoader)
     const isLoading =  useSelector(state => state.weatherForecast.isLoading)
+    const isError =  useSelector(state => state.weatherForecast.isErrror)
 
     const dispatch = useDispatch()
         
     return ( 
         <Container style={{display:showDetail? 'block':'none'}}>
+                        <p className="h3 mb-3">Current Weather Detail {weather.name}</p>
         <div className='text-white d-flex align-items-center' onClick={() => setShowDetail(false)}> <BiLeftArrow/>Back</div>
+                        <p>{Date().toLocaleString()}</p>
         <Row>
                 <Col>
                       <div className="bg-dark text-light p-2 mt-3" style={{fontSize:'15px', minHeight:'250px'}}>
-                        <p className="h3 mb-3">Current Weather Detail {weather.name}</p>
-                        {/* <p>{Date().toLocaleString()}</p> */}
 
-                        {isLoading? (<Loader/>) : weather !== {}?    
+                        {isLoading? <Loader/> : isError? <Alert variant="danger">{isError}</Alert> : weather &&    
                         <Container>
                             <Row>
                                 <Col>
@@ -63,21 +66,21 @@ function DetailWeather({setShowDetail, showDetail}) {
                                 </Col>
                             </Row>
                         </Container>
-                    : <Alert variant="danger">Could not find the weather for the city</Alert>}
+                    }
                     </div> 
                 </Col>
-               
            </Row>
-           <Row  >
-               <Col className='mt-2'>
-                {weather !=={} && <Button variant="secondary" onClick={() => dispatch(getWeatherDailyAction(weather.coord.lat,weather.coord.lon,3))}>Show Daily Weather</Button>}
-               </Col>
+           <Row>
+                <Col className='mt-2'>
+                {weather !=={} && <Button variant="secondary" onClick={() => {dispatch(getWeatherDailyAction(weather.coord.lat,weather.coord.lon,3)); setShowDailyWeather(true)}}>Show Daily Weather</Button>}
+                </Col>
            </Row>
 
-           <Row>
-            
-               { dailyWeatherLoading?  <Loader/> : dailyWeather.daily !==[] && dailyWeather.daily.map((day,i) =><DailyCard key={i} day={day}/>)}
-           </Row>
+            <Container style={{display:showDailyWeather? 'block':'none'}} >
+            <Row >
+                { dailyWeatherLoading?  <Loader/> : dailyWeather.daily.length>0 && dailyWeather?.daily.map((day,i) =><DailyCard key={i} day={day}/>)}
+            </Row>
+            </Container>
         </Container>
      );
 }
