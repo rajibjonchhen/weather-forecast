@@ -16,14 +16,7 @@ export const initialState = {
 const persistConfig = {
     key: "root",
     storage,
-    transforms: [
-        encryptTransform({
-          secretKey: process.env.REACT_APP_SECRET_KEY_CODE,
-          onError: function (error) {
-            console.log(error)
-          },
-        }),
-      ],
+    transform : []
   };
 
   const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

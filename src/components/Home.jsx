@@ -1,61 +1,139 @@
 import { useEffect, useState } from "react";
-import { Container, Row, Col, Form } from "react-bootstrap";
+import { Container, Row, Col, Form, Alert } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { ACTIONS, getWeatherAction, selectedCityAction } from "../redux/actions";
+import {BsSunrise, BsSunset, BsArrowRightCircleFill, BsArrowUp} from 'react-icons/bs'
+import {WiDegrees} from 'react-icons/wi'
 
 function Home() {
 
-const [query, setQuery] = useState()
+const [query, setQuery] = useState('')
+const [showDetail, setShowDetail] = useState(false)
 const city =  useSelector(state => state.weatherForecast.city)
 const weather =  useSelector(state => state.weatherForecast.weather)
 
 const dispatch = useDispatch()
 
-console.log("city",city);
-console.log("weather",weather);
-    useEffect(() => {
-        
-        // dispatch(getWeatherAction(city))
-    },[city])
+useEffect(() => {
+    // dispatch(getWeatherAction(city))
+},[city])
 
-    
-    const handleSearch = async(e) => {
-        e.preventDefault()
+
+const handleSearch = async(e) => {
+    e.preventDefault()
         dispatch(selectedCityAction(query))
-       
-    }
-    const getWeather = async() => {
-        
     }
 
     return ( 
        <Container>
+       <Container style={{display:!showDetail? 'block':'none'}}>
+                        <Form onSubmit={(e) => {handleSearch(e)}}>
+                            <input value={query} onChange={(e) => setQuery(e.target.value)} placeholder='Enter the city name'/>
+                        </Form>
            <Row>
                 <Col>
-                    {weather && <div className="bg-dark text-light" style={{fontSize:'12px'}}>
-                        <Form onSubmit={(e) => {handleSearch(e)}}>
-                            <Form.Control onChange={(e) => selectedCityAction(e.target.value)} />
-                        </Form>
-                        <p>Current Weather</p>
+                      <div className="bg-dark text-light p-2 mt-3" style={{fontSize:'15px'}}>
+                        <p>Current Weather {weather.name}</p>
                         <p>{Date().toLocaleString()}</p>
-                        <p className='text-white'> City : {weather.name}</p>
-                        <p className='text-white'> Sunrise : {weather.sys.sunrise}</p>
-                        
-                        <p className='text-white'> Sunrise : {weather.sys.sunset}</p>
-                        
-                        <p className='text-white'>Feels Like {weather.main.feels_like}</p>
-                        <p className='text-white'>Humidity {weather.main.humidity}</p>
-                        <p className='text-white'>Pressure {weather.main.pressure}</p>
-                        <p className='text-white'>Temperature {weather.main.temp}</p>
-                        <p className='text-white'>Max {weather.main.temp_max}</p>
-                        <p className='text-white'>Min {weather.main.temp_min}</p>
-                        <p className='text-white'>visibility {weather.visibility}</p>
-                    </div>}
+                        {weather?    <div>
+                        <Container>
+                            <Row>
+                                <Col>
+                                <div className="d-flex justify-content-around">
+                                    <p className='text-white h1'> {weather.main.temp} 
+                                    <WiDegrees/>
+                                    <span className='h3'>
+                                        C
+                                        </span>
+                                        </p>
+                                    <div >
+                                        <div className='text-left'>Max {weather.main.temp_max}<WiDegrees/>C</div>
+                                        <div className='text-left'>Min {weather.main.temp_min}<WiDegrees/>C</div>
+                                    </div>
+                                </div>
+                                    {weather.weather.map((w,i) =>
+                                <div  key={i} className='weather-item d-flex justify-content-between'>
+                                {w.main} ({w.description})
+                                </div>
+                                    )}
+                                </Col>
+                                <Col>
+                                    <div className='weather-item d-flex justify-content-between'> <span>Feels Like</span> <span>{weather.main.feels_like} <WiDegrees/>C</span></div>
+                                    <div className='weather-item d-flex justify-content-between'> <span>Humidity</span> <span>{weather.main.humidity}%</span></div>
+                                    <div className='weather-item d-flex justify-content-between'> <span>Pressure </span> <span><BsArrowUp/>{weather.main.pressure}mb</span></div>
+                                </Col>
+                            </Row>
+                            <Row className="mt-3">
+                                <Col>
+                                
+                                
+                                </Col>
+                                <Col>
+                                    <div onClick={()=> setShowDetail(true)}>More Details <BsArrowRightCircleFill/></div>
+                                </Col>
+
+                            </Row>
+                        </Container>
+                        </div>
+                    : <Alert variant="danger">Could not find the weather for the city</Alert>}
+                    </div> 
                 </Col>
-                <Col>
-                </Col>
+               
            </Row>
        </Container>
+
+       <Container style={{display:showDetail? 'block':'none'}}>
+                            <div className='text-white' onClick={() => setShowDetail(false)}>Back</div>
+           <Row>
+                <Col>
+                      <div className="bg-dark text-light p-2 mt-3" style={{fontSize:'15px'}}>
+                        <p>Current Weather Detail {weather.name}</p>
+                        <p>{Date().toLocaleString()}</p>
+                        {weather?    <div>
+                        <Container>
+                            <Row>
+                                <Col>
+                                <div >
+                                    <p className='text-white h3'> {weather.main.temp}</p>
+                                    <div className="d-flex justify-content-around">
+                                    <div className='text-left'>Max {weather.main.temp_max}<WiDegrees/>C</div>
+                                    <div className='text-left'>Min {weather.main.temp_min}<WiDegrees/>C</div>
+                                    </div>
+                                </div>
+                                
+                               
+                                </Col>
+                                <Col>
+                                    <div className='weather-item d-flex justify-content-between'> <span>Feels Like</span> <span>{weather.main.feels_like} <WiDegrees/>C</span></div>
+                                    <div className='weather-item d-flex justify-content-between'> <span>Humidity</span> <span>{weather.main.humidity}%</span></div>
+                                    <div className='weather-item d-flex justify-content-between'> <span>Pressure </span> <span><BsArrowUp/>{weather.main.pressure}mb</span></div>
+                                </Col>
+                            </Row>
+                            <Row className="mt-3">
+                                <Col>
+                                <div className='weather-item d-flex justify-content-between'> <span><BsSunrise/> Sunrise : </span> <span>{weather.sys.sunrise}</span></div>
+                                <div className='weather-item d-flex justify-content-between'> <span><BsSunset/> Sunrise : </span> <span>{weather.sys.sunset}</span></div>
+                                <div className='weather-item d-flex justify-content-between'><span>Cloud</span> <span>{weather.clouds.all}%</span></div>
+                                </Col>
+                                <Col>
+                                <div className='weather-item d-flex justify-content-between'><span>rain</span> <span>{} km/hr</span></div>
+                                <div className='weather-item d-flex justify-content-between'><span>Wind</span> <span>{weather.wind.speed} km/hr</span></div>
+                                <div className='weather-item d-flex justify-content-between'><span>visibility</span> <span>{weather.visibility}km</span></div>
+                                    
+                                </Col>
+
+                            </Row>
+                        </Container>
+                        </div>
+                    : <Alert variant="danger">Could not find the weather for the city</Alert>}
+                    </div> 
+                </Col>
+               
+           </Row>
+       </Container>
+       </Container>
+
+    
      );
 }
 

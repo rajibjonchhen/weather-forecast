@@ -8,7 +8,7 @@ export const selectedCityAction = (city) => ({
     payload : city
 })
 
-export const getWeatherAction = (city) => {
+export const getWeatherAction = (city = 'kathmandu')  => {
     return async(dispatch, getState) => {
         try {
             const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&APPID=3b9973cf61ca30f5e17a067cbe48bfdc`)
