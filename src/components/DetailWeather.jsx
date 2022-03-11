@@ -54,12 +54,12 @@ function DetailWeather({setShowDetail, showDetail}) {
                                
                                 </Col>
                                 <Col>
-                                    <div className='weather-item d-flex justify-content-between'> <span>Feels Like</span> <span>{weather.main.feels_like} <WiDegrees/>C</span></div>
-                                    <div className='weather-item d-flex justify-content-between'> <span>Humidity</span> <span>{weather.main.humidity}%</span></div>
-                                    <div className='weather-item d-flex justify-content-between'> <span>Pressure </span> <span><BsArrowUp/>{weather.main.pressure}mb</span></div>
-                                    <div className='weather-item d-flex justify-content-between'><span>rain</span> <span>{} km/hr</span></div>
-                                    <div className='weather-item d-flex justify-content-between'><span>Wind</span> <span>{weather.wind.speed} km/hr</span></div>
-                                    <div className='weather-item d-flex justify-content-between'><span>visibility</span> <span>{weather.visibility}km</span></div>
+                                    <div className='weather-item'> <span>Feels Like</span> <span>{weather.main.feels_like} <WiDegrees/>C</span></div>
+                                    <div className='weather-item'> <span>Humidity</span> <span>{weather.main.humidity}%</span></div>
+                                    <div className='weather-item'> <span>Pressure </span> <span><BsArrowUp/>{weather.main.pressure}mb</span></div>
+                                    <div className='weather-item'><span>rain</span> <span>{} km/hr</span></div>
+                                    <div className='weather-item'><span>Wind</span> <span>{weather.wind.speed} km/hr</span></div>
+                                    <div className='weather-item'><span>visibility</span> <span>{weather.visibility}km</span></div>
                                 </Col>
                             </Row>
                         </Container>

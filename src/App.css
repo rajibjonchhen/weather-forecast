@@ -44,10 +44,13 @@
 
 .weather-item{
   display: flex;
-  justify-content: around;
+  justify-content: space-between;
   border-bottom: 1px solid grey ;
   padding:3px 0px;
   width: 100%;
+}
 
-  
+.daily-weather-list{
+display: flex;
+justify-content:space-between;
 }

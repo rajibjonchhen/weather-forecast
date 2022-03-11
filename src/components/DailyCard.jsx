@@ -1,6 +1,57 @@
 import { Col } from "react-bootstrap";
 
 function DailyCard({day}) {
+    
+    const myArray = [
+        {
+            title: 'Dew_point',
+            value: day.dew_point
+        },
+        {
+            title: 'Dumidity',
+            value: day.humidity
+        },
+        {
+            title: 'Wind Speed',
+            value: day.wind_speed
+        },
+        {
+            title: 'Moon Phase',
+            value: day.moon_phase
+        },
+        {
+            title: 'Moon Rise',
+            value: day.moonrise
+        },
+        {
+            title: 'Moon Set',
+            value: day.moonset
+        },
+        {
+            title: 'Pressure',
+            value: day.pressure
+        },
+        {
+            title: 'Sun Rise',
+            value: day.sunrise
+        },
+        {
+            title: 'Sunset',
+            value: day.sunset
+        },
+        {
+            title: 'Day Temperature',
+            value: day.temp.day
+        },
+        {
+            title: 'Night Temperature',
+            value: day.temp.night
+        },
+        {
+            title: 'Evening Temperature',
+            value: day.temp.eve
+        },
+    ]
     return ( 
 //         clouds: 98
 // dew_point: 280.37
@@ -23,23 +74,15 @@ function DailyCard({day}) {
 // wind_speed: 7.34
         <Col sm={6} md={4} lg={3} xl={3}>
         <div className="bg-dark text-light p-2 mt-3" style={{fontSize:'15px', minHeight:'250px'}}>
-            <div>
-                <div></div>
-                {day.dew_point}
-            </div>
-            <div>{day.humidity}</div>
-            <div>{day.moon_phase}</div>
-            <div>{day.moonrise}</div>
-            <div>{day.moonset}</div>
-            <div>{day.pressure}</div>
-            <div>{day.sunrise}</div>
-            <div>{day.sunset}</div>
-            <div>{day.temp.day}</div>
-            <div>{day.temp.min}</div>
-            <div>{day.temp.max}</div>
-            <div>{day.temp.night}</div>
-            <div>{day.temp.eve}</div>
-            <div>{day.wind_speed}</div>
+           {myArray?.map(item => 
+           <div className='daily-weather-list'>
+                <div>
+                    {item.title}
+                </div>
+                <div>
+                    {item.value}
+                </div>
+            </div>)}
         </div>
         </Col>
      );
