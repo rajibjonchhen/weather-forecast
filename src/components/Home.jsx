@@ -2,8 +2,10 @@ import { useEffect, useState } from "react";
 import { Container, Row, Col, Form, Alert } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { ACTIONS, getWeatherAction, selectedCityAction } from "../redux/actions";
-import {BsSunrise, BsSunset, BsArrowRightCircleFill, BsArrowUp} from 'react-icons/bs'
+import {BsSunrise, BsSunset, BsArrowRightCircleFill, BsArrowUp, BsArrowLeftCircleFill} from 'react-icons/bs'
 import {WiDegrees} from 'react-icons/wi'
+import {BiLeftArrow} from 'react-icons/bi'
+import Loader from "./Loader";
 
 function Home() {
 
@@ -11,11 +13,12 @@ const [query, setQuery] = useState('')
 const [showDetail, setShowDetail] = useState(false)
 const city =  useSelector(state => state.weatherForecast.city)
 const weather =  useSelector(state => state.weatherForecast.weather)
+const isLoading =  useSelector(state => state.weatherForecast.isLoading)
 
 const dispatch = useDispatch()
 
 useEffect(() => {
-    // dispatch(getWeatherAction(city))
+    dispatch(getWeatherAction(city))
 },[city])
 
 
@@ -26,15 +29,15 @@ const handleSearch = async(e) => {
 
     return ( 
        <Container>
-       <Container style={{display:!showDetail? 'block':'none'}}>
+       <Container style={{display:!showDetail? 'block':'none', height:'300px'}}>
                         <Form onSubmit={(e) => {handleSearch(e)}}>
                             <input value={query} onChange={(e) => setQuery(e.target.value)} placeholder='Enter the city name'/>
                         </Form>
            <Row>
                 <Col>
                       <div className="bg-dark text-light p-2 mt-3" style={{fontSize:'15px'}}>
-                        <p>Current Weather {weather.name}</p>
-                        <p>{Date().toLocaleString()}</p>
+                        <p className="h3 mb-3">Current Weather {weather.name}</p>
+                        {/* <p>{Date().toLocaleString()}</p> */}
                         {weather?    <div>
                         <Container>
                             <Row>
@@ -83,45 +86,37 @@ const handleSearch = async(e) => {
        </Container>
 
        <Container style={{display:showDetail? 'block':'none'}}>
-                            <div className='text-white' onClick={() => setShowDetail(false)}>Back</div>
+            <div className='text-white d-flex align-items-center' onClick={() => setShowDetail(false)}> <BiLeftArrow/>Back</div>
            <Row>
                 <Col>
                       <div className="bg-dark text-light p-2 mt-3" style={{fontSize:'15px'}}>
-                        <p>Current Weather Detail {weather.name}</p>
-                        <p>{Date().toLocaleString()}</p>
-                        {weather?    <div>
+                        <p className="h3 mb-3">Current Weather Detail {weather.name}</p>
+                        {/* <p>{Date().toLocaleString()}</p> */}
+
+                        {isLoading? (<Loader/>) : weather?    <div>
                         <Container>
                             <Row>
                                 <Col>
-                                <div >
+                                <div className="d-flex flex-column align-items-center">
                                     <p className='text-white h3'> {weather.main.temp}</p>
                                     <div className="d-flex justify-content-around">
                                     <div className='text-left'>Max {weather.main.temp_max}<WiDegrees/>C</div>
                                     <div className='text-left'>Min {weather.main.temp_min}<WiDegrees/>C</div>
                                     </div>
+                                <div className='weather-item d-flex justify-content-between'> <span><BsSunrise/> Sunrise : </span> <span>{weather.sys.sunrise}</span></div>
+                                <div className='weather-item d-flex justify-content-between'> <span><BsSunset/> Sunrise : </span> <span>{weather.sys.sunset}</span></div>
+                                <div className='weather-item d-flex justify-content-between'><span>Cloud</span> <span>{weather.clouds.all}%</span></div>
                                 </div>
-                                
                                
                                 </Col>
                                 <Col>
                                     <div className='weather-item d-flex justify-content-between'> <span>Feels Like</span> <span>{weather.main.feels_like} <WiDegrees/>C</span></div>
                                     <div className='weather-item d-flex justify-content-between'> <span>Humidity</span> <span>{weather.main.humidity}%</span></div>
                                     <div className='weather-item d-flex justify-content-between'> <span>Pressure </span> <span><BsArrowUp/>{weather.main.pressure}mb</span></div>
-                                </Col>
-                            </Row>
-                            <Row className="mt-3">
-                                <Col>
-                                <div className='weather-item d-flex justify-content-between'> <span><BsSunrise/> Sunrise : </span> <span>{weather.sys.sunrise}</span></div>
-                                <div className='weather-item d-flex justify-content-between'> <span><BsSunset/> Sunrise : </span> <span>{weather.sys.sunset}</span></div>
-                                <div className='weather-item d-flex justify-content-between'><span>Cloud</span> <span>{weather.clouds.all}%</span></div>
-                                </Col>
-                                <Col>
-                                <div className='weather-item d-flex justify-content-between'><span>rain</span> <span>{} km/hr</span></div>
+                                    <div className='weather-item d-flex justify-content-between'><span>rain</span> <span>{} km/hr</span></div>
                                 <div className='weather-item d-flex justify-content-between'><span>Wind</span> <span>{weather.wind.speed} km/hr</span></div>
                                 <div className='weather-item d-flex justify-content-between'><span>visibility</span> <span>{weather.visibility}km</span></div>
-                                    
                                 </Col>
-
                             </Row>
                         </Container>
                         </div>

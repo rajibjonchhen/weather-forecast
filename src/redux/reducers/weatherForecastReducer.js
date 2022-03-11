@@ -16,6 +16,11 @@ switch (action.type){
             weather : action.payload
         }
 
+    case ACTIONS.IS_LOADING:
+        return{
+            ...state,
+            isLoading : action.payload
+        }
     default: return state
 
 }

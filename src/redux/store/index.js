@@ -10,6 +10,7 @@ export const initialState = {
         city : '',
         weather : {},
         days : [],
+        isLoading : true
     }
 }
 
