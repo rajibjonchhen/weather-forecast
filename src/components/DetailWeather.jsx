@@ -1,15 +1,21 @@
-import { Alert, Col, Container, Row } from "react-bootstrap";
+import { Alert, Button, Col, Container, Row } from "react-bootstrap";
 import {BsSunrise, BsSunset, BsArrowUp} from 'react-icons/bs'
 import {WiDegrees} from 'react-icons/wi'
 import {BiLeftArrow} from 'react-icons/bi'
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Loader from "./Loader";
+import DailyCard from "./DailyCard";
+import { getWeatherDailyAction } from "../redux/actions";
 
 function DetailWeather({setShowDetail, showDetail}) {
 
     const weather =  useSelector(state => state.weatherForecast.weather)
+    const dailyWeather =  useSelector(state => state.dailyWeather.detailWeather)
+    const dailyWeatherLoading =  useSelector(state => state.dailyWeather.dailyLoader)
     const isLoading =  useSelector(state => state.weatherForecast.isLoading)
 
+    const dispatch = useDispatch()
+        const daily = dailyWeather?.daily
     return ( 
         <Container style={{display:showDetail? 'block':'none'}}>
         <div className='text-white d-flex align-items-center' onClick={() => setShowDetail(false)}> <BiLeftArrow/>Back</div>
@@ -61,6 +67,16 @@ function DetailWeather({setShowDetail, showDetail}) {
                     </div> 
                 </Col>
                
+           </Row>
+           <Row  >
+               <Col className='mt-2'>
+                {weather !=={} && <Button variant="secondary" onClick={() => dispatch(getWeatherDailyAction(weather.coord.lat,weather.coord.lon,3))}>Show Daily Weather</Button>}
+               </Col>
+           </Row>
+
+           <Row>
+            
+               { dailyWeatherLoading?  <Loader/> : daily !==[] && daily.map((day,i) =><DailyCard key={i} day={day}/>)}
            </Row>
         </Container>
      );

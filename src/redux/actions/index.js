@@ -1,8 +1,10 @@
 export const ACTIONS = {
     SELECTED_CITY : "SELECTED_CITY",
     GET_WEATHER : "GET_WEATHER",
-    GET_WEATHER_DETAILS : "GET_WEATHER_DETAIL",
-    IS_LOADING : "IS_LOADING"
+    GET_WEATHER_DAILY : "GET_WEATHER_DAILY",
+    IS_LOADING : "IS_LOADING",
+    DAILYLOADER : "DAILYLOADER",
+
 }
 
 export const selectedCityAction = (city) => ({
@@ -48,31 +50,31 @@ export const getWeatherAction = (city = 'lisbon')  => {
 
 
 
-export const getWeatherHourlyAction = (city = 'lisbon')  => {
+export const getWeatherDailyAction = (lat, lon, cnt)  => {
   
     return async(dispatch, getState) => {
         try {
             dispatch({
-                type : ACTIONS.IS_LOADING,
+                type : ACTIONS.DAILYLOADER,
                 payload : true
             })
-            const response = await fetch(`https://api.openweathermap.org/data/2.5/forecast/climate?q=${city}&APPID=3b9973cf61ca30f5e17a067cbe48bfdc`)
+            const response = await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&APPID=3b9973cf61ca30f5e17a067cbe48bfdc`)
             if(response.ok){
                 const data = await response.json()
                 console.log(data);
                 dispatch({
-                    type : ACTIONS.GET_WEATHER_DETAILS,
+                    type : ACTIONS.GET_WEATHER_DAILY,
                     payload : data
                 })
                 dispatch({
-                    type : ACTIONS.IS_LOADING,
+                    type : ACTIONS.DAILYLOADER,
                     payload : false
 
                 })
             } else {  
-                console.log('error geting data')
+                console.log('error getting data')
                 dispatch({
-                    type : ACTIONS.IS_LOADING,
+                    type : ACTIONS.DAILYLOADER,
                     payload : false
 
                 })
@@ -81,7 +83,7 @@ export const getWeatherHourlyAction = (city = 'lisbon')  => {
         } catch (error) {
             console.log(error)
             dispatch({
-                type : ACTIONS.IS_LOADING,
+                type : ACTIONS.DAILYLOADER,
                 payload : false
 
             })
