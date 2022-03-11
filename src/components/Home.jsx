@@ -1,34 +1,57 @@
 import { useEffect, useState } from "react";
+import { Container, Row, Col, Form } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
+import { ACTIONS, getWeatherAction, selectedCityAction } from "../redux/actions";
 
 function Home() {
 
-    const [weather, setWeather] = useState({})
-    const [city, setCity] = useState('Lisbon,Portugal')
+const city =  useSelector(state => state.weatherForecast.city)
+const weather =  useSelector(state => state.weatherForecast.weather)
+const dispatch = useDispatch()
 
+console.log("city",city);
+console.log("weather",weather);
     useEffect(() => {
-        getWeather()
+        dispatch(selectedCityAction("Lisbon,Portugal"))
+        // dispatch(getWeatherAction(city))
+        // getWeather(city)
     },[])
     
+    const handleSearch = (city) => {
+        getWeather(city)
+    }
     const getWeather = async() => {
-        try {
-            const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&APPID=3b9973cf61ca30f5e17a067cbe48bfdc`)
-            if(response.ok){
-                const data = await response.json()
-                console.log(data);
-                setWeather(data)
-            } else {  
-                console.log('error geting data')
-                return
-            }
-        } catch (error) {
-            
-        }
+        
     }
 
     return ( 
-        <div>
-
-        </div>
+       <Container>
+           <Row>
+                <Col>
+                    {weather && <div className="bg-dark text-light" style={{fontSize:'12px'}}>
+                        <Form onSubmit={() => {handleSearch()}}>
+                            <Form.Control/>
+                        </Form>
+                        <p>Current Weather</p>
+                        <p>{Date().toLocaleString()}</p>
+                        <p className='text-white'> City : {weather.name}</p>
+                        <p className='text-white'> Sunrise : {weather.sys.sunrise}</p>
+                        
+                        <p className='text-white'> Sunrise : {weather.sys.sunset}</p>
+                        
+                        <p className='text-white'>Feels Like {weather.main.feels_like}</p>
+                        <p className='text-white'>Humidity {weather.main.humidity}</p>
+                        <p className='text-white'>Pressure {weather.main.pressure}</p>
+                        <p className='text-white'>Temperature {weather.main.temp}</p>
+                        <p className='text-white'>Max {weather.main.temp_max}</p>
+                        <p className='text-white'>Min {weather.main.temp_min}</p>
+                        <p className='text-white'>visibility {weather.visibility}</p>
+                    </div>}
+                </Col>
+                <Col>
+                </Col>
+           </Row>
+       </Container>
      );
 }
 

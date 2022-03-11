@@ -3,16 +3,30 @@ import './App.css';
 import MyNavbar from './components/MyNavbar';
 import 'bootstrap/dist/css/bootstrap.css'
 import Home from './components/Home';
+import { Provider } from 'react-redux';
+import { configStore, persistor } from './redux/store';
+import { PersistGate } from 'redux-persist/lib/integration/react';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 
 function App() {
   return (
-    <div className="App">
-      <MyNavbar/>
-      <header className="App-header">
-        <Home/>
-      </header>
-    </div>
+    <Provider store={configStore}>
+      <PersistGate  persistor={persistor} loading={null}>
+        <BrowserRouter>
+          <MyNavbar/>
+        <div className="App">
+        <div className="App-header">
+        <Routes>
+                <Route path='/' element={<Home/>} />
+        </Routes>
+          </div>
+          </div>
+        </BrowserRouter>
+
+    
+      </PersistGate>
+    </Provider>
   );
 }
 
