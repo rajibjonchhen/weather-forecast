@@ -1,7 +1,7 @@
 export const ACTIONS = {
     SELECTED_CITY : "SELECTED_CITY",
     GET_WEATHER : "GET_WEATHER",
-    GET_WEATHER_HOURLY : "GET_WEATHER_DETAIL",
+    GET_WEATHER_DETAILS : "GET_WEATHER_DETAIL",
     IS_LOADING : "IS_LOADING"
 }
 
@@ -21,12 +21,27 @@ export const getWeatherAction = (city = 'lisbon')  => {
                     type : ACTIONS.GET_WEATHER,
                     payload : data
                 })
+                dispatch({
+                    type : ACTIONS.IS_LOADING,
+                    payload : false
+
+                })
             } else {  
                 console.log('error geting data')
+                dispatch({
+                    type : ACTIONS.IS_LOADING,
+                    payload : false
+
+                })
                 return
             }
         } catch (error) {
-            
+            console.log(error)
+            dispatch({
+                type : ACTIONS.IS_LOADING,
+                payload : false
+
+            })
         }
     }
 }
@@ -46,7 +61,7 @@ export const getWeatherHourlyAction = (city = 'lisbon')  => {
                 const data = await response.json()
                 console.log(data);
                 dispatch({
-                    type : ACTIONS.GET_WEATHER_DETAIL,
+                    type : ACTIONS.GET_WEATHER_DETAILS,
                     payload : data
                 })
                 dispatch({
