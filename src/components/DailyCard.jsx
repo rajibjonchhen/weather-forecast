@@ -21,9 +21,12 @@ function DailyCard({day}) {
 // wind_deg: 232
 // wind_gust: 12.75
 // wind_speed: 7.34
-        <Col>
+        <Col sm={6} md={4} lg={3} xl={3}>
         <div className="bg-dark text-light p-2 mt-3" style={{fontSize:'15px', minHeight:'250px'}}>
-            <div>{day.dew_point}</div>
+            <div>
+                <div></div>
+                {day.dew_point}
+            </div>
             <div>{day.humidity}</div>
             <div>{day.moon_phase}</div>
             <div>{day.moonrise}</div>

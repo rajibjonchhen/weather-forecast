@@ -20,6 +20,12 @@ switch (action.type){
                     detailWeather : action.payload
             }
 
+        case ACTIONS.ROMOVE_WEATHER_DAILY:
+            return {
+                ...state,
+                    detailWeather : {}
+            }
+
     default: return state
 
 }

@@ -2,6 +2,7 @@ export const ACTIONS = {
     SELECTED_CITY : "SELECTED_CITY",
     GET_WEATHER : "GET_WEATHER",
     GET_WEATHER_DAILY : "GET_WEATHER_DAILY",
+    ROMOVE_WEATHER_DAILY : "ROMOVE_WEATHER_DAILY",
     IS_LOADING : "IS_LOADING",
     DAILYLOADER : "DAILYLOADER",
 
@@ -10,6 +11,9 @@ export const ACTIONS = {
 export const selectedCityAction = (city) => ({
     type : ACTIONS.SELECTED_CITY,
     payload : city
+})
+export const removeWeatherDailyAction = () => ({
+    type : ACTIONS.SELECTED_CITY,
 })
 
 export const getWeatherAction = (city = 'lisbon')  => {

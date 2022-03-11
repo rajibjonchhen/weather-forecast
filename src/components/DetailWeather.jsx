@@ -15,7 +15,7 @@ function DetailWeather({setShowDetail, showDetail}) {
     const isLoading =  useSelector(state => state.weatherForecast.isLoading)
 
     const dispatch = useDispatch()
-        const daily = dailyWeather?.daily
+        
     return ( 
         <Container style={{display:showDetail? 'block':'none'}}>
         <div className='text-white d-flex align-items-center' onClick={() => setShowDetail(false)}> <BiLeftArrow/>Back</div>
@@ -76,7 +76,7 @@ function DetailWeather({setShowDetail, showDetail}) {
 
            <Row>
             
-               { dailyWeatherLoading?  <Loader/> : daily !==[] && daily.map((day,i) =><DailyCard key={i} day={day}/>)}
+               { dailyWeatherLoading?  <Loader/> : dailyWeather.daily !==[] && dailyWeather.daily.map((day,i) =><DailyCard key={i} day={day}/>)}
            </Row>
         </Container>
      );
