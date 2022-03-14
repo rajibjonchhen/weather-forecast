@@ -11,14 +11,13 @@ function SearchCity() {
 
     useEffect(() => {
         dispatch(getWeatherAction(query))
-        console.log(city)
     },[])
 
     const handleSearch = async(e) => {
         e.preventDefault()
             dispatch(getWeatherAction(query))
             dispatch(removeWeatherDailyAction())
-            console.log()
+          
             setQuery('')
         }
     return ( 

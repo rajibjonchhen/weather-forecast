@@ -25,7 +25,7 @@ function Weather({setShowDetail, showDetail}) {
                                 <Row>
                                     <Col >
                                     <div className="d-flex justify-content-around">
-                                        <img src={`http://openweathermap.org/img/w/{weather.icon}.png`} alt='type of weather'/> 
+                                        <img src={`http://openweathermap.org/img/w/${weather.weather[0].icon}.png`} alt='type of weather'/> 
                                         
                             
                                         <p className='text-white h1'> {weather.main.temp} 
