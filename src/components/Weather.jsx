@@ -25,15 +25,15 @@ function Weather({setShowDetail, showDetail}) {
                                 <Row>
                                     <Col >
                                     <div className="d-flex justify-content-around">
-                                        {/* <img src={`{weather.icon}`} alt='type of weather'/>  */}
+                                        <img src={`http://openweathermap.org/img/w/{weather.icon}.png`} alt='type of weather'/> 
                                         
                             
-                                        {/* <p className='text-white h1'> {weather.main.temp} 
+                                        <p className='text-white h1'> {weather.main.temp} 
                                         <WiDegrees/>
                                         <span className='h3'>
                                             C
                                             </span>
-                                            </p> */}
+                                            </p>
                                         <div >
                                             <div className='text-left'>Max {weather.main.temp_max}<WiDegrees/>C</div>
                                             <div className='text-left'>Min {weather.main.temp_min}<WiDegrees/>C</div>

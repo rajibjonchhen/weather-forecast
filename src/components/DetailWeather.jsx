@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Loader from "./Loader";
 import DailyCard from "./DailyCard";
 import { getWeatherDailyAction } from "../redux/actions";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function DetailWeather({setShowDetail, showDetail}) {
 
@@ -18,6 +18,10 @@ function DetailWeather({setShowDetail, showDetail}) {
     const isError =  useSelector(state => state.weatherForecast.isErrror)
 
     const dispatch = useDispatch()
+
+    useEffect(() => {
+        dispatch(getWeatherDailyAction(weather.coord.lat,weather.coord.lon,3))
+    },[])
         
     return ( 
         <Container style={{display:showDetail? 'block':'none'}}>
@@ -72,12 +76,12 @@ function DetailWeather({setShowDetail, showDetail}) {
            </Row>
            <Row>
                 <Col className='mt-2'>
-                {weather !=={} && <Button variant="secondary" onClick={() => {dispatch(getWeatherDailyAction(weather.coord.lat,weather.coord.lon,3)); setShowDailyWeather(true)}}>Show Daily Weather</Button>}
+                {weather !=={} && <Button variant="secondary" onClick={() => {setShowDailyWeather(true)}}>Show Daily Weather</Button>}
                 </Col>
            </Row>
 
           
-            <Row className='d-flex' style={{display:showDailyWeather? 'block':'none'}} >
+            <Row className='d-flex ' style={{display:showDailyWeather? 'block':'none'}} >
                 { dailyWeatherLoading?  <Loader/> : dailyWeather.daily.length>0 && dailyWeather?.daily.map((day,i) =><DailyCard key={i} day={day}/>)}
             </Row>
            
