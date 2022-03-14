@@ -76,13 +76,15 @@ function DetailWeather({setShowDetail, showDetail}) {
            </Row>
            <Row>
                 <Col className='mt-2'>
-                {weather !=={} && <Button variant="secondary" onClick={() => {setShowDailyWeather(true)}}>Show Daily Weather</Button>}
+                {weather !=={} && <Button className='showDailyWeatherBtn' variant="secondary" onClick={() => {setShowDailyWeather(!showDailyWeather); console.log(showDailyWeather)}}>{showDailyWeather? "Hide Daily Weather":"Show Daily Weather"}</Button>}
                 </Col>
            </Row>
 
           
-            <Row className='d-flex ' style={{display:showDailyWeather? 'block':'none'}} >
+            <Row style={{display:showDailyWeather? 'block':'none'}} >
+            <Row className='m-auto'>
                 { dailyWeatherLoading?  <Loader/> : dailyWeather.daily.length>0 && dailyWeather?.daily.map((day,i) =><DailyCard key={i} day={day}/>)}
+            </Row>
             </Row>
            
         </Container>

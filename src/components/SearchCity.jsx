@@ -22,7 +22,7 @@ function SearchCity() {
         }
     return ( 
         <Form onSubmit={(e) => {handleSearch(e)}}>
-        <input value={query} onChange={(e) => setQuery(e.target.value)} placeholder='Enter the city name'/>
+        <input value={query} onChange={(e) => setQuery(e.target.value)} placeholder='Enter the city name' style={{width:'300px'}}/>
         </Form>
      );
 }

@@ -15,13 +15,12 @@ function App() {
       <PersistGate  persistor={persistor} loading={null}>
         <BrowserRouter>
           <MyNavbar/>
-        <div className="App">
-        <div className="App-header">
+        <div className="App bg-dark text-white pt-5" style={{minHeight:'100vh'}}>
+        
         <Routes>
                 <Route path='/' element={<Home/>} />
         </Routes>
-          </div>
-          </div>
+        </div>
         </BrowserRouter>
 
     

@@ -54,8 +54,8 @@ function DailyCard({day}) {
     ]
     return ( 
 
-        <Col sm={6} md={4} lg={3} xl={3} >
-            <Card   style={{ width: '15rem',fontSize:'12px' }} className="bg-dark text-light mt-3">
+        <Col sm={12} md={6} lg={3} xl={3} >
+            <Card   style={{ width: '15rem',fontSize:'12px' }} className="shadow bg-dark mt-3 border-white ">
             <Card.Img variant="top" src={`http://openweathermap.org/img/w/${day.weather[0].icon}.png`}  style={{width:'70px'}}/>
             <Card.Body>
                 <Card.Title>Day</Card.Title>

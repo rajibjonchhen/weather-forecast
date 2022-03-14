@@ -3,7 +3,7 @@ import {TiWeatherSunny} from 'react-icons/ti'
 
 function MyNavbar() {
     return ( 
-    <Navbar bg="dark" variant="dark" style={{position:'sticky', top:'0px',zIndex:1}}>
+    <Navbar className='border-bottom' bg="dark" variant="dark" style={{position:'sticky', top:'0px',zIndex:1}}>
         <Navbar.Brand href="#home">
             <TiWeatherSunny/>
             Weather Forecast

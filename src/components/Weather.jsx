@@ -17,7 +17,7 @@ function Weather({setShowDetail, showDetail}) {
             
             <Row>
                 <Col>
-            {isLoading? (<Loader/>) : isError? <Alert variant='danger' >{isError}</Alert> : weather.name &&
+            {isLoading? (<Loader/>) : (isError && weather === {})? <Alert variant='danger' >{isError}</Alert> : weather.name &&
                       <div className="bg-dark text-light p-2 mt-3" style={{fontSize:'15px', minHeight:'250px'}}>
                         <p className="h3 mb-3">Current Weather {weather.name}</p>
                         <p>{Date().toLocaleString()}</p>

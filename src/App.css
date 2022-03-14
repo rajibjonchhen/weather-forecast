@@ -54,3 +54,15 @@
 display: flex;
 justify-content:space-between;
 }
+
+
+
+.shadow{
+box-shadow: 10px 5px 5px red !important;
+border-radius: 20px !important
+
+}
+
+.showDailyWeatherBtn{
+min-width:250px;
+}
